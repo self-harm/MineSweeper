@@ -1,14 +1,11 @@
-package com.javarush.games.minesweeper;
 import com.javarush.engine.cell.*;
 import java.util.*;
 import java.io.*;
 import java.util.ArrayList;
 
-
 public class MinesweeperGame extends Game{
 
     private static final int SIDE = 9;
-
 
     public void initialize() {
         setScreenSize(SIDE, SIDE);
@@ -24,14 +21,8 @@ public class MinesweeperGame extends Game{
     private int countClosedTiles = SIDE * SIDE;
     private int score;
 
-
-
-
-
-
     private void createGame(){
         //   isGameStopped = false;
-
 
         for(int x = 0; x < gameField.length; x++){
             for(int y = 0; y < gameField[x].length; y++){
@@ -52,13 +43,7 @@ public class MinesweeperGame extends Game{
 
         countFlags = countMinesOnField;
 
-
     }
-
-
-
-
-
 
     private void countMineNeighbors(){  /* добавляем посчитанных соседей в ячейки*/
         for (int y = 0; y < gameField.length ; y++) {
@@ -71,15 +56,9 @@ public class MinesweeperGame extends Game{
                         }
                     }
                 }
-
             }
-
         }
     }
-
-
-
-
 
     public ArrayList<GameObject> getNeighbors(GameObject gameObject) { /*считаем соседей у минированных ячеек и добаляем
                                                                   в массив result;*/
@@ -100,9 +79,7 @@ public class MinesweeperGame extends Game{
         }
         return result;
     }
-
-
-
+    
     private void openTile(int x, int y){
         countClosedTiles--;
         boolean notZero = gameField[y][x].countMineNeighbors!=0;
@@ -113,13 +90,9 @@ public class MinesweeperGame extends Game{
             setScore(score);
         }
 
-
-
-
         if(countClosedTiles == countMinesOnField && !gameField[y][x].isMine) {
             win();
         }
-
 
         else if(gameField[y][x].isMine){
             setCellValueEx(x,y,Color.RED, MINE);
@@ -127,11 +100,9 @@ public class MinesweeperGame extends Game{
             gameOver();
         }
 
-
         else if(notZero) {
             setCellNumber(x,y,gameField[y][x].countMineNeighbors);
         }
-
 
         else if(!notZero){
             setCellValue(x,y,"");
@@ -149,28 +120,19 @@ public class MinesweeperGame extends Game{
         else if(isGameStopped == true){return;}
         else if(gameField[x][y].isOpen){return;}
         else if(gameField[x][y].isFlag){
-            return;}
-
-
-
+            return;
+        }
     }
-
-
-
-
+    
     private void markTile (int x, int y){
         if(isGameStopped == false){
             if(gameField[y][x].isOpen) return;
             if(countFlags==0 && !gameField[y][x].isFlag) return;
             else if(!gameField[y][x].isFlag) {
-
                 gameField[y][x].isFlag=true;
                 countFlags--;
                 setCellValue(x,y,FLAG);
-                setCellColor(x,y,Color.ORANGE);
-
-            }
-
+                setCellColor(x,y,Color.ORANGE);}
             else if(gameField[y][x].isFlag){
                 gameField[y][x].isFlag = false;
                 countFlags++;
@@ -178,11 +140,8 @@ public class MinesweeperGame extends Game{
                 setCellColor(x,y,Color.PINK);
             }
         }
-
     }
-
-
-
+    
     private void gameOver() {
         isGameStopped = true;
         showMessageDialog( Color.GRAY, "The game is over!", Color.BLACK, 55);
@@ -203,7 +162,6 @@ public class MinesweeperGame extends Game{
         createGame();
     }
 
-
     @Override
     public void onMouseLeftClick(int x, int y){ //В методе onMouseLeftClick(int, int) должен быть вызван метод openTile(int, int).
         // super.onMouseLeftClick(x, y);
@@ -220,7 +178,4 @@ public class MinesweeperGame extends Game{
         super.onMouseRightClick(x, y);
         markTile(x,y);
     }
-
-
-
 }
