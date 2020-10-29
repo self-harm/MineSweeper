@@ -23,18 +23,16 @@ public class MinesweeperGame extends Game{
 
     private void createGame(){
         //   isGameStopped = false;
-
         for(int x = 0; x < gameField.length; x++){
             for(int y = 0; y < gameField[x].length; y++){
 
-                setCellColor(y, x, Color.PINK);
+                setCellColor(y, x, Color.PINK);  
                 boolean t = false;
                 setCellValue(x, y, "");
                 if (getRandomNumber(10)==1){
                     t=true;
                     countMinesOnField++;
                 }
-
                 gameField[y][x] = new GameObject(x, y, t);
             }
         }
